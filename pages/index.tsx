@@ -4,8 +4,6 @@ import Image from "next/image";
 
 import dynamic from "next/dynamic";
 
-
-import Globals from "@/modules/Globals";
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
