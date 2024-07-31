@@ -25,7 +25,7 @@ export default function index() {
 
                         {products.map((item: any, index: number) => {
                             return (
-                                <div className="col-lg-3 col-6 col-md-5 mb-4">
+                                <div className="col-lg-3 col-6 col-md-5 mb-4" key={`product${index}`}>
                                     <div className="product-card shadow">
                                         <div className="image-container d-flex justify-content-center">
                                             <img src={item.image} alt="" />
