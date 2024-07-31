@@ -1,0 +1,29 @@
+.side-bar-wrapper {
+    width: 250px;
+    margin-top: 40px;
+    
+
+    .menu-items {
+
+        .active {
+            background-color: $primary-color;
+            color: white;
+            border-radius: 8px;
+        }
+
+        padding: 0;
+
+        .menu-item {
+            padding: 10px;
+            
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            
+        }
+    }
+}

@@ -1,0 +1,60 @@
+.shop-wrapper {
+    background: rgb(236, 236, 236);
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px 0px;
+    color: black;
+
+    .product-card {
+        width: 100%;
+        background-color: white;
+        padding: 20px;
+        border-radius: 16px;
+        
+        img {
+            width: 100%;    
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .product-name {
+            font-weight: 500;
+            font-size: 18px;
+            padding: 0;
+            margin-bottom: 5px;
+        }
+
+       
+
+        .earlybird-badge {
+            font-size: 12px;
+            background-color: $primary-orange;
+            color: white;
+            padding: 5px;
+           
+        }
+
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @media screen and (max-width: 1000px ) {
+                flex-direction: column;
+                align-items: start;
+                gap: 5px;
+            }
+        }
+
+        .amount {
+            font-weight: 500;
+        }
+
+        .addcart-btn {
+            background-color: $primary-color;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 8px;
+        }
+    }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      @page {
+        size: A4;
+        margin: 20mm;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      .container {
+        margin: auto;
+        width: 100%;
+        height: 287mm; /* Total height of A4 page - top and bottom margins */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card {
+        width: 100%;
+        padding: 10mm;
+        border: 3px solid #000;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: calc((100% - 40mm) / 3); /* Distribute space equally among 3 cards, accounting for padding */
+      }
+      .row {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .left-section, .right-section {
+        width: 50%;
+      }
+      ul, li {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 3px;
+      }
+      .from, .to {
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+      .dotted-line {
+        margin: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.847);
+        border-style: dotted;
+        width: 100%;
+      }
+      .right-section ul{
+        text-transform: uppercase; /* Convert text to uppercase */
+      }
+    </style>
+  </head>
+  <body>
+    @foreach($addresses->chunk(3) as $chunk)
+    <div class="container">
+      @foreach($chunk as $address)
+      <div class="card">
+        <p style="text-align: center; font-weight: bold; margin-bottom: 10px">{{ 'ORDER.NO : '.$address['to']['ord_num'] }}</p>
+        <table class="row">
+          <td class="left-section">
+            <p class="from">From:</p>
+            <ul>
+              <li>VAYKO VENTURES LLP</li>
+              <li>VAYAL PEEDIKAYIL</li>
+              <li>KEEZHUR,PAYANCHERI</li>
+              <li>IRITTY, KANNUR, KERALA</li>
+              <li>670703</li>
+            </ul>
+          </td>
+
+          <td class="right-section" style="padding-left: 20px;">
+            <p class="to">To:</p>
+            <ul>
+              <li>{{ $address['to']['name'] }}</li>
+              <li>{{ $address['to']['address'] }}</li>
+              <li>{{ $address['to']['district'] }}</li>
+              <li>{{ $address['to']['city'] }}, {{ $address['to']['pin_code'] }}</li>
+              <li>{{ $address['to']['contact'] }}{{ $address['to']['contact2'] ? ' ,' . $address['to']['contact2'] : '' }}</li>
+            </ul>
+          </td>
+        </table>
+      </div>
+
+      <div class="dotted-line"></div>
+
+      
+
+      @endforeach
+    </div>
+    @endforeach
+  </body>
+</html>
