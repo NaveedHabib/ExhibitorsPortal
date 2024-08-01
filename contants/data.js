@@ -1,21 +1,24 @@
-export const products = [
+export const Products = [
     {
         name: 'Khidri stuffed dates',
         price: 'AED 192.00',
         image: '/assets/imgs/product1.png',
-        badge: 'EARLY BIRD'
+        badge: 'EARLY BIRD',
+        keywords: ['catering', 'dates', 'ajwa saudi']
     },
     {
         name: 'Ajwa dates',
         price: 'AED 220.00',
         image: 'https://th.bing.com/th/id/OIP.qqY9JPZMyGh2hNPmYFpNAAHaEP?rs=1&pid=ImgDetMain',
-        badge: 'NEW'
+        badge: 'NEW',
+        keywords: ['saudi dates']
     },
     {
         name: 'Sukkari dates',
         price: 'AED 150.00',
         image: 'https://th.bing.com/th/id/OIP.kguQFW8viUteFgA8SGD8pQHaE8?rs=1&pid=ImgDetMain',
-        badge: 'SALE'
+        badge: 'SALE',
+        keywords: ['catering', 'dates']
     },
     {
         name: 'Medjool dates',
@@ -47,4 +50,38 @@ export const products = [
         image: 'https://royalpalm-dates.com/wp-content/uploads/2021/06/zahidi2-1.jpg',
         badge: 'SPECIAL'
     }
+    
 ];
+
+
+export const Categories = [
+
+    {
+        name: 'Catering',
+        image: '/assets/imgs/catering.png'
+    },
+
+    {
+        name: 'Rigging',
+        image: '/assets/imgs/rigging.png'
+    },
+    {
+        name: 'IT & Telecom',
+        image: '/assets/imgs/IT&Telecom.png'
+    },
+    {
+        name: 'Cleaning',
+        image: '/assets/imgs/cleaning.png'
+    },
+
+    {
+        name: 'IT & Telecom',
+        image: '/assets/imgs/IT&Telecom.png'
+    },
+    {
+        name: 'Cleaning',
+        image: '/assets/imgs/cleaning.png'
+    },
+
+
+]

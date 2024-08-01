@@ -1,19 +1,14 @@
 // pages/index.js
 import Head from "next/head";
-import Image from "next/image";
 
-import dynamic from "next/dynamic";
-
-import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import SpinnerComponent from "@/components/UI/SpinnerComponent";
-
 
 import { motion } from "framer-motion"
-import { fadeInAnimationVariants } from "@/utils/customAnimation";
+
 import BannerComponent from "@/components/BannerComponent";
+import { Categories } from "@/contants/data";
 
 
 
@@ -27,7 +22,7 @@ export default function Home() {
       transition={{ duration: 0.5 }}
     >
       <Head>
-        <title>Exhibitor Portal</title>
+        <title>AIM | Exhibitor Portal</title>
         <meta name="description" content="" />
 
       </Head>
@@ -45,69 +40,22 @@ export default function Home() {
           </div>
 
           <div className="row service-wrapper">
-            <div className="col-lg-4 mb-3">
-              <Link href="/shop">
-                <div className="service-card">
+            {Categories.map((item: any, index: number) => {
+              return (
+                <div className="col-lg-4 mb-3" key={`service${index}`}>
+                  <Link href="/shop">
+                    <div className="service-card">
 
-                  <img src="/assets/imgs/catering.png" alt="" className="product-img" />
+                      <img src={item.image} alt="" className="product-img" />
 
-                  <div className="footer">
-                    <p>Catering</p>
-                  </div>
+                      <div className="footer">
+                        <p>{item.name}</p>
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-            </div>
-
-            <div className="col-lg-4 mb-3">
-              <div className="service-card">
-
-                <img src="/assets/imgs/rigging.png" alt="" className="product-img" />
-
-                <div className="footer">
-                  <p>Rigging</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 mb-3">
-              <div className="service-card">
-
-                <img src="/assets/imgs/IT&Telecom.png" alt="" className="product-img" />
-                <div className="footer">
-                  <p>IT & Telecom</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 mb-3">
-              <div className="service-card">
-
-                <img src="/assets/imgs/cleaning.png" alt="" className="product-img" />
-                <div className="footer">
-                  <p>Cleaning</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 mb-3">
-              <div className="service-card">
-
-                <img src="/assets/imgs/cctv rental.png" alt="" className="product-img" />
-                <div className="footer">
-                  <p>CCTV Rental</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 mb-3">
-              <div className="service-card">
-
-                <img src="/assets/imgs/electricals.png" alt="" className="product-img" />
-                <div className="footer">
-                  <p>Electricals</p>
-                </div>
-              </div>
-            </div>
+              )
+            })}
           </div>
         </div>
       </div>

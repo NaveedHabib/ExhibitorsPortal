@@ -1,17 +1,39 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { IoMdClose } from 'react-icons/io';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import _ from 'lodash';
 
 export default function MenuComponent() {
     const [isToggle, setIsToggle] = useState(false);
+    const [query, setQuery] = useState('')
 
     const handleToggle = () => {
 
         setIsToggle(prevState => !prevState);
     };
+
+    const router = useRouter();
+    const handleSearchChange = (e: any) => {
+        const newQuery = e.target.value;
+        setQuery(newQuery);
+        if (newQuery.trim() === '') {
+            router.push('/');
+        } else {
+            debouncedSearch(newQuery);
+        }
+    };
+
+    const debouncedSearch = useCallback(
+        _.debounce((newQuery: string) => {
+            router.push(`/search?query=${newQuery}`);
+        }, 300), 
+        []
+    );
+
     return (
         <div className='menu-wrapper'>
             <div className="container  ">
@@ -71,9 +93,9 @@ export default function MenuComponent() {
 
 
                     <div className="col-lg-3 d-none d-lg-block">
-                        <form className='search-input-container'>
+                        <form className='search-input-container' >
 
-                            <input type="Search" placeholder='search' className='search-input' />
+                            <input type="Search" placeholder='search' className='search-input' value={query} onChange={handleSearchChange} />
 
                         </form>
                     </div>
@@ -81,11 +103,6 @@ export default function MenuComponent() {
 
 
                 </div>
-
-
-
-
-
 
             </div>
 

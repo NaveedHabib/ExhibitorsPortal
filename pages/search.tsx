@@ -1,9 +1,29 @@
-import Link from 'next/link'
-import React from 'react'
-import { Products } from "../../contants/data.js"
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Products } from '@/contants/data';
 
-export default function index() {
+interface Product {
+    image: string;
+    name: string;
+    price: string;
+}
 
+const Search: React.FC = () => {
+    const router = useRouter();
+    const { query } = router.query;
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        if (query) {
+            const searchQuery = (query as string).toLowerCase();
+            const results = Products.filter(product =>
+                product.name.toLowerCase().includes(searchQuery) ||
+                product.keywords?.some(keyword => keyword.toLowerCase().includes(searchQuery))
+            );
+            setFilteredProducts(results);
+        }
+    }, [query]);
 
     return (
         <div className='shop-wrapper'>
@@ -15,16 +35,14 @@ export default function index() {
                                 Home
                             </Link>
                         </li>
-
-                        <li className="breadcrumb-item active" aria-current="page">Shop</li>
+                        <li className="breadcrumb-item active" aria-current="page">Search</li>
                     </ol>
                 </nav>
 
                 <div className="products-container mt-5">
                     <div className="row ">
-
-                        {Products.map((item: any, index: number) => {
-                            return (
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((item, index) => (
                                 <div className="col-lg-3 col-6 col-md-5 mb-4" key={`product${index}`}>
                                     <div className="product-card shadow">
                                         <div className="image-container d-flex justify-content-center">
@@ -40,14 +58,15 @@ export default function index() {
                                         </div>
                                     </div>
                                 </div>
-                            )
-                        })}
-
+                            ))
+                        ) : (
+                            <p>No products found for {query}.</p>
+                        )}
                     </div>
-
                 </div>
-
             </div>
         </div>
-    )
+    );
 }
+
+export default Search;
