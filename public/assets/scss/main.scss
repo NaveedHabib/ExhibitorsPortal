@@ -42,7 +42,7 @@ li {
 }
 
 a {
-    
+
     cursor: pointer;
 }
 
@@ -50,7 +50,9 @@ a {
     width: 100%;
     min-height: 2.6875rem;
     padding: 10px;
-    color: rgb(99, 99, 99);
+    color: #7f757d;
+    border-color: #dddddd;
+    border-radius: 8px;
 }
 
 .heading-wrapper {
@@ -81,7 +83,7 @@ a {
 
     }
 
-    
+
 }
 
 .description {
@@ -119,6 +121,13 @@ hr {
     border: 1px solid white;
 }
 
+.company-logo {
+    width: 160px;
+}
+
+
+
+
 
 
 @import "./locals/menu-component.scss";
@@ -126,4 +135,5 @@ hr {
 @import "./locals/product-service-section.scss";
 @import "./locals/my-account.scss";
 @import "./locals/side-bar-component.scss";
-@import "./locals/shop.scss"
+@import "./locals/shop.scss";
+@import "./locals/cart.scss";

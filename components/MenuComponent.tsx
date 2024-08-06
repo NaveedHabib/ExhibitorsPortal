@@ -6,17 +6,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 export default function MenuComponent() {
     const [isToggle, setIsToggle] = useState(false);
     const [query, setQuery] = useState('')
+    const router = useRouter();
 
     const handleToggle = () => {
 
         setIsToggle(prevState => !prevState);
     };
 
-    const router = useRouter();
+    const currentPath = router.pathname;
+
+    const getNavItemClass = (href: string) => {
+        return currentPath === href ? "menu-item  nav-menu-active" : "menu-item";
+    };
+
     const handleSearchChange = (e: any) => {
         const newQuery = e.target.value;
         setQuery(newQuery);
@@ -30,13 +38,24 @@ export default function MenuComponent() {
     const debouncedSearch = useCallback(
         _.debounce((newQuery: string) => {
             router.push(`/search?query=${newQuery}`);
-        }, 300), 
+        }, 300),
         []
     );
+
+    const cartItems = useSelector((state: RootState) => state.cart.items);
+
+
 
     return (
         <div className='menu-wrapper'>
             <div className="container  ">
+                <div className="row">
+                    <div className="col-12">
+                        <div className="d-flex justify-content-end">
+                            <button className='download-exhibitor-manual-btn'>Download Exhibitor Manual</button>
+                        </div>
+                    </div>
+                </div>
                 <div className="row w-100 d-flex align-items-center justify-content-between">
                     <div
                         className="menu-icon-wrapper d-lg-none d-block col-2"
@@ -57,48 +76,61 @@ export default function MenuComponent() {
                             </div>
                         )}
                     </div>
-                    <div className="col-lg-3 col-10 d-flex justify-content-lg-start justify-content-end">
-                        <button className='download-exhibitor-manual-btn'>Download Exhibitor Manual</button>
-                    </div>
 
-                    <div className="col-lg-6 ">
+
+                    <div className="col-lg-10">
                         <ul className='menu-items'>
-                            <li>
+
+                            <div className=" d-none d-lg-block">
+                                <form className='search-input-container' >
+
+                                    <input type="Search" placeholder='search' className='search-input' value={query} onChange={handleSearchChange} />
+
+                                </form>
+                            </div>
+
+
+                            <li className={getNavItemClass("/")}>
                                 <Link href="/" className='text-dark'>
                                     Home
                                 </Link>
                             </li>
-                            <li>
-                                <Link href="/shop" className='text-dark'>
+
+
+                            <li className={getNavItemClass("/shop")}>
+                                <Link href="/shop" className=''>
                                     Shop
                                 </Link>
                             </li>
-                            <li className='d-flex gap-2 align-items-center'>
-                                <FiShoppingCart />
-                                Cart
-                            </li>
-                            <li>
-                                <Link href="/my-account" className='text-dark'>
+
+                            <li className={getNavItemClass("/my-account")}>
+                                <Link href="/my-account" >
                                     My Account
                                 </Link>
                             </li>
 
-                            <li>
-                                <Link href="/contractor" className='text-dark'>
+                            <li className={getNavItemClass("/contractor")}>
+                                <Link href="/contractor" >
                                     contractor
                                 </Link>
                             </li>
+
+
+
+                            <li className={getNavItemClass("/cart")}>
+                                <Link href="/cart" className='d-flex gap-2 align-items-center'>
+                                    <FiShoppingCart />
+                                    Cart <span className='bg-primary d-flex justify-content-center align-items-center text-white' style={{ width: "30px", height: "30px", borderRadius: "50%", fontSize: "14px" }}>{cartItems.length}</span>
+
+                                </Link>
+                            </li>
+
+
                         </ul>
                     </div>
 
 
-                    <div className="col-lg-3 d-none d-lg-block">
-                        <form className='search-input-container' >
 
-                            <input type="Search" placeholder='search' className='search-input' value={query} onChange={handleSearchChange} />
-
-                        </form>
-                    </div>
 
 
 
@@ -120,8 +152,22 @@ export default function MenuComponent() {
                     >
                         <ul className='mobile-menu-items'>
                             <li className='mobile-menu-item d-flex gap-2 align-items-center'>
-                                <FiShoppingCart />
-                                Cart
+                                <Link href="/" className=''>
+                                    Home
+                                </Link>
+                            </li>
+
+                            <li className='mobile-menu-item d-flex gap-2 align-items-center'>
+                                <Link href="/shop" className=''>
+                                    Shop
+                                </Link>
+                            </li>
+                            <li className='mobile-menu-item d-flex gap-2 align-items-center'>
+                                <Link href="/cart" className='d-flex gap-2 align-items-center'>
+                                    <FiShoppingCart />
+                                    Cart <span className='bg-primary d-flex justify-content-center align-items-center text-white' style={{ width: "20px", height: "20px", borderRadius: "50%", fontSize: "12px" }}>{cartItems.length}</span>
+
+                                </Link>
                             </li>
                             <li className='mobile-menu-item'>
                                 <Link href="/my-account" >
