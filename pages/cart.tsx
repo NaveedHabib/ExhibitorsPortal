@@ -34,7 +34,7 @@ const Cart = () => {
     return (
         <div className="cart-wrapper">
             <div className="container">
-                <h1 className='mb-5'>Shopping Cart</h1>
+                <h1 className='mb-5 mt-5'>My Shopping Cart</h1>
                 {cartItems.length === 0 ? (
                     <p>Your cart is empty.</p>
                 ) : (
