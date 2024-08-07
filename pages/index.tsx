@@ -29,7 +29,7 @@ export default function Home() {
 
       <BannerComponent />
 
-      <div className="products-service-wrapper">
+      <div className="products-service-wrapper ">
         <div className="container">
           <div className="row">
             <div className="col-12 heading-wrapper">

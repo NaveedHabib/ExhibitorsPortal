@@ -26,7 +26,7 @@ const Search: React.FC = () => {
     }, [query]);
 
     return (
-        <div className='shop-wrapper'>
+        <div className='shop-wrapper margin-top-section'>
             <div className="container">
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">

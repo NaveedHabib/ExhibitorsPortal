@@ -1,11 +1,14 @@
 .menu-wrapper {
     width: 100%;
     height: 140px;
-    position: relative;
+    position: fixed;
     display: flex;
     align-items: center;
     background: white;
-
+    top: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+    
     @media screen and (max-width: 800px) {
         height: 100px;
     }
@@ -120,4 +123,8 @@
             }
         }
     }
+}
+
+.hidden-y {
+    transform: translateY(-100%);
 }

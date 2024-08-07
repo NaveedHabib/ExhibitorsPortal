@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { IoMdClose } from 'react-icons/io';
@@ -12,6 +12,9 @@ import { RootState } from '@/store';
 export default function MenuComponent() {
     const [isToggle, setIsToggle] = useState(false);
     const [query, setQuery] = useState('')
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollTop, setLastScrollTop] = useState(0);
+
     const router = useRouter();
 
     const handleToggle = () => {
@@ -44,14 +47,34 @@ export default function MenuComponent() {
 
     const cartItems = useSelector((state: RootState) => state.cart.items);
 
+    const handleScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
+        if (scrollTop > lastScrollTop) {
+            // Scrolling down
+            setIsVisible(false);
+        } else {
+            // Scrolling up
+            setIsVisible(true);
+        }
+
+        setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // For Mobile or negative scrolling
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollTop]);
 
     return (
-        <div className='menu-wrapper'>
+        <div  className={`${`menu-wrapper`} ${!isVisible ? 'hidden-y' : ''}`}>
             <div className="container  ">
                 <div className="row">
                     <div className="col-12">
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-end ">
                             <button className='download-exhibitor-manual-btn'>Download Exhibitor Manual</button>
                         </div>
                     </div>
@@ -122,6 +145,12 @@ export default function MenuComponent() {
                                     <FiShoppingCart />
                                     Cart <span className='bg-primary d-flex justify-content-center align-items-center text-white' style={{ width: "30px", height: "30px", borderRadius: "50%", fontSize: "14px" }}>{cartItems.length}</span>
 
+                                </Link>
+                            </li>
+
+                            <li className="menu-item">
+                                <Link href="/login" >
+                                    logout
                                 </Link>
                             </li>
 

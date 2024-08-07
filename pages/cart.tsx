@@ -32,9 +32,9 @@ const Cart = () => {
 
 
     return (
-        <div className="cart-wrapper">
+        <div className="cart-wrapper margin-top-section">
             <div className="container">
-                <h1 className='mb-5 mt-5'>My Shopping Cart</h1>
+                <h2 className='mb-5 mt-5'>My Shopping Cart</h2>
                 {cartItems.length === 0 ? (
                     <p>Your cart is empty.</p>
                 ) : (

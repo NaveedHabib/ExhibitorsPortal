@@ -7,7 +7,7 @@ export default function BannerComponent() {
 
     const customHeading = "We Build Premium Events, Exhibitions, and Branded Environments.".split(" ")
     return (
-        <div className="container banner-wrapper">
+        <div className="container banner-wrapper margin-top-section">
             <div className="row w-100">
                 <div className="col-lg-6">
                     <div className="left-section">

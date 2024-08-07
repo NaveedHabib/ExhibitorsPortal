@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function MyAccount() {
     return (
-        <div className='my-account-wrapper'>
+        <div className='my-account-wrapper margin-top-section'>
             <div className="container">
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function product() {
     return (
-        <div className='product-detail-wrapper'>
+        <div className='product-detail-wrapper margin-top-section'>
             <div className="container product-container">
                 <div className="row mt-5">
                     <div className="col-lg-6 col-12 left-container">
