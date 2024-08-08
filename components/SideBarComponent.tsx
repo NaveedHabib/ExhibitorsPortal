@@ -27,17 +27,16 @@ export default function SideBarComponent() {
                         <Link href="/contractor">
                             <li className={getNavItemClass("/contractor")}>
                                 <FaUser />
-                                <span>Contractor</span>
+                                <span>Contractors</span>
                             </li>
                         </Link>
 
-                        <Link href="#">
-                            <li className={getNavItemClass("/my-account/contrator-orders")}>
-                                <BsBoxFill />
-                                <span>Contractor Orders</span>
+                        <Link href="/contractor/information">
+                            <li className={getNavItemClass("/contractor/information")}>
+                                <FaShippingFast />
+                                <span>Information</span>
                             </li>
                         </Link>
-
                     </div>
                 ) : (
 
@@ -48,26 +47,11 @@ export default function SideBarComponent() {
                                 <span>Profile</span>
                             </li>
                         </Link>
-                        <Link href="/company-profile">
-
-                            <li className={getNavItemClass("/company-profile")}>
-                                <FaBuilding />
-                                <span>Company Profile</span>
-                            </li>
-                        </Link>
 
                         <Link href="/my-account/my-orders">
                             <li className={getNavItemClass("/my-account/my-orders")}>
                                 <FaShippingFast />
                                 <span>My Orders</span>
-                            </li>
-
-                        </Link>
-
-                        <Link href="/my-account/my-orders">
-                            <li className={getNavItemClass("/my-account/contrator-orders")}>
-                                <BsBoxFill />
-                                <span>Contractor Orders</span>
                             </li>
                         </Link>
                     </div>

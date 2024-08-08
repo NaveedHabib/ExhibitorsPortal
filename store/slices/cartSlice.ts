@@ -1,15 +1,8 @@
+import { StandSpaceItemModel } from '@/sysmodel/StandSpaceModel';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CartItem {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  quantity: number;
-}
-
 interface CartState {
-  items: CartItem[];
+  items: StandSpaceItemModel[];
 }
 
 const initialState: CartState = {
@@ -20,8 +13,8 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<CartItem>) => {
-      const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
+    addToCart: (state, action: PayloadAction<StandSpaceItemModel>) => {
+      const itemIndex = state.items.findIndex(item => item.id === action.payload.StandSpaceItemID);
       if (itemIndex >= 0) {
         state.items[itemIndex].quantity += 1;
       } else {
@@ -29,12 +22,12 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter(item => item.id !== action.payload);
+      state.items = state.items.filter(item => item.StandSpaceItemID !== action.payload);
     },
     updateQuantity: (state, action: PayloadAction<{ productId: number, quantity: number }>) => {
-      const item = state.items.find(item => item.id === action.payload.productId);
+      const item = state.items.find(item => item.StandSpaceItemID === action.payload.productId);
       if (item) {
-        item.quantity = action.payload.quantity;
+        item.Quantity = action.payload.quantity;
       }
     },
   },

@@ -1,8 +1,11 @@
 // components/PersonalInformationForm.tsx
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import axios from "axios";
 import * as Yup from 'yup';
+import StandSpaceModel from '@/sysmodel/StandSpaceModel';
+import Globals from '@/modules/Globals';
 
 interface Props {
     formData: any;
@@ -11,8 +14,6 @@ interface Props {
 }
 
 const PersonalInformationForm: React.FC<Props> = ({ formData, setFormData, nextStep }) => {
-
-
     const formik = useFormik({
         initialValues: formData,
         validationSchema: Yup.object({
@@ -25,10 +26,37 @@ const PersonalInformationForm: React.FC<Props> = ({ formData, setFormData, nextS
                 .required('Confirm Password is required'),
         }),
         onSubmit: (values) => {
-            setFormData(values);
-            nextStep();
+            var email: any = document.getElementById("register-email");
+            var emailError = document.getElementById("email-error");
+            emailError?.classList.add("d-none");
+            if (email.value) {
+                axios.get(`${Globals.API_URL}Account/EmailExist?id=${eventid}&email=${email.value}`).then((r: any) => {
+                    const dataModel: boolean = r.data;
+                    if (dataModel) {
+                        emailError?.classList.remove("d-none");
+                    }
+                    else {
+                        setFormData(values);
+                        nextStep();
+                    }
+                });
+            }
+
         },
     });
+
+    var eventid = window.location.pathname.replace("/register/", "");
+
+    const [StandSpaceData, SetStandSpaceData] = useState<StandSpaceModel[]>([]);
+
+    useEffect(() => {
+        if (eventid) {
+            axios.get(`${Globals.API_URL}Exhibitor/GetAllStandSpaces/${eventid}`).then((r: any) => {
+                const dataModel: Array<StandSpaceModel> = r.data;
+                SetStandSpaceData(dataModel);
+            });
+        }
+    }, [eventid]);
 
     return (
         <div className='mt-5'>
@@ -46,13 +74,15 @@ const PersonalInformationForm: React.FC<Props> = ({ formData, setFormData, nextS
                     </div>
 
                     <div className="col-12 mb-3">
-                        <input className='form-control' type="email" name="email" placeholder="Email" value={formik.values.email}
+                        <input className='form-control' id='register-email' type="email" name="email" placeholder="Email" value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur} />
 
                         {formik.touched.email && typeof formik.errors.email === 'string' ? (
                             <div className='text-danger' style={{ fontSize: "14px" }}>{formik.errors.email}</div>
                         ) : null}
+
+                        <p className='m-0 text-danger d-none' style={{ fontSize: "14px" }} id='email-error'>Email already exist.</p>
 
                     </div>
 
@@ -62,9 +92,14 @@ const PersonalInformationForm: React.FC<Props> = ({ formData, setFormData, nextS
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}>
                             <option value="">Select Stand Space</option>
-                            <option value="small">Customized Stand</option>
-                            <option value="medium">Sustainable Stand</option>
-
+                            {
+                                StandSpaceData.map((s: any) => {
+                                    var item: StandSpaceModel = s;
+                                    return (
+                                        <option value={item.StandSpaceID}>{item.Name}</option>
+                                    )
+                                })
+                            }
                         </select>
 
                         {formik.touched.standSpace && typeof formik.errors.standSpace === 'string' ? (
@@ -97,7 +132,7 @@ const PersonalInformationForm: React.FC<Props> = ({ formData, setFormData, nextS
                 </div>
 
                 <div className="col-12 d-flex justify-content-center mt-5">
-                    <div className='d-flex gap-2'>Already have account ?  <Link href="/login" className='text-primary'>Login</Link></div>
+                    <div className='d-flex gap-2'>Already have account ?  <Link href={`/login/${eventid}`} className='text-primary'>Login</Link></div>
                 </div>
 
 

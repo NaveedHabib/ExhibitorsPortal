@@ -8,6 +8,11 @@ import { useRouter } from 'next/router';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import Globals from '@/modules/Globals';
+import { loggedModel } from '@/sysmodel/loginModel';
+import Helper from '@/modules/Helper';
+import eventModel from '@/sysmodel/eventModel';
+import axios from "axios";
 
 export default function MenuComponent() {
     const [isToggle, setIsToggle] = useState(false);
@@ -69,13 +74,37 @@ export default function MenuComponent() {
         };
     }, [lastScrollTop]);
 
+    const loggedData: loggedModel | null = Helper.getLoggedData();
+
+    function logout() {
+        if (loggedData) {
+            localStorage.removeItem(Globals.PROJECT_ID);
+            location.href = `${Globals.BASE_URL}login/${loggedData.eventid}`;
+        }
+    }
+
+    const [EventData, SetEventData] = useState<eventModel>();
+
+    useEffect(() => {
+        if (loggedData) {
+            axios.get(`${Globals.API_URL}Exhibitor/GetEvent/${loggedData.eventid}`).then((r: any) => {
+                const dataModel: eventModel = r.data;
+                SetEventData(dataModel);
+            });
+        }
+    }, []);
+
     return (
-        <div  className={`${`menu-wrapper`} ${!isVisible ? 'hidden-y' : ''}`}>
+        <div className={`${`menu-wrapper`} ${!isVisible ? 'hidden-y' : ''}`}>
             <div className="container  ">
                 <div className="row">
                     <div className="col-12">
-                        <div className="d-flex justify-content-end ">
-                            <button className='download-exhibitor-manual-btn'>Download Exhibitor Manual</button>
+                        <div className="d-flex justify-content-end">
+                            {
+                                EventData?.ExhibitorManual ? (
+                                    <a href={EventData?.ExhibitorManual} className='download-exhibitor-manual-btn' target={"_blank"}>Download Exhibitor Manual</a>
+                                ) : ""
+                            }
                         </div>
                     </div>
                 </div>
@@ -114,30 +143,42 @@ export default function MenuComponent() {
 
 
                             <li className={getNavItemClass("/")}>
-                                <Link href="/" className='text-dark'>
+                                <a href='/' className='text-dark'>
                                     Home
-                                </Link>
+                                </a>
                             </li>
 
 
                             <li className={getNavItemClass("/shop")}>
-                                <Link href="/shop" className=''>
+                                <Link href="/shop/all" className=''>
                                     Shop
                                 </Link>
                             </li>
 
-                            <li className={getNavItemClass("/my-account")}>
-                                <Link href="/my-account" >
-                                    My Account
-                                </Link>
-                            </li>
+                            {
+                                loggedData?.type == "exhibitor" ? (
+                                    <React.Fragment>
+                                        <li className={getNavItemClass("/my-account")}>
+                                            <Link href="/my-account" >
+                                                My Account
+                                            </Link>
+                                        </li>
 
-                            <li className={getNavItemClass("/contractor")}>
-                                <Link href="/contractor" >
-                                    contractor
-                                </Link>
-                            </li>
 
+                                        <li className={getNavItemClass("/contractor")}>
+                                            <Link href="/contractor" >
+                                                contractor
+                                            </Link>
+                                        </li>
+                                    </React.Fragment>
+                                ) : (
+                                    <li className={getNavItemClass("/contractor")}>
+                                        <Link href={`/contractor/orders/${loggedData?.id}`} >
+                                            Orders
+                                        </Link>
+                                    </li>
+                                )
+                            }
 
 
                             <li className={getNavItemClass("/cart")}>
@@ -149,9 +190,13 @@ export default function MenuComponent() {
                             </li>
 
                             <li className="menu-item">
-                                <Link href="/login" >
-                                    logout
-                                </Link>
+                                <a onClick={(e) => {
+                                    logout()
+                                }}>
+                                    <Link href="javascript:0" >
+                                        logout
+                                    </Link>
+                                </a>
                             </li>
 
 

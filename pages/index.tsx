@@ -8,11 +8,38 @@ import Link from "next/link";
 import { motion } from "framer-motion"
 
 import BannerComponent from "@/components/BannerComponent";
-import { Categories } from "@/contants/data";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { loggedModel } from "@/sysmodel/loginModel";
+import Helper from "@/modules/Helper";
+import Globals from "@/modules/Globals";
+import eventModel from "@/sysmodel/eventModel";
+import { StandSpaceCategoryModel } from "@/sysmodel/StandSpaceModel";
 
 
 export default function Home() {
+
+  const loggedData: loggedModel | null = Helper.getLoggedData();
+
+  const [EventData, SetEventData] = useState<eventModel>();
+
+  const [categories, setCategories] = useState<Array<StandSpaceCategoryModel>>([]);
+
+  useEffect(() => {
+    if (loggedData) {
+      axios.get(`${Globals.API_URL}Exhibitor/GetEvent/${loggedData.eventid}`).then((r: any) => {
+        const dataModel: eventModel = r.data;
+        SetEventData(dataModel);
+      });
+
+      const fetchCategories = async () => {
+        const data = await Helper.getCategories(loggedData.type=="exhibitor"?loggedData.id.toString():loggedData.exhibitorId);
+        setCategories(data);
+      };
+
+      fetchCategories();
+    }
+  }, []);
 
   return (
     <motion.div
@@ -22,12 +49,16 @@ export default function Home() {
       transition={{ duration: 0.5 }}
     >
       <Head>
-        <title>AIM | Exhibitor Portal</title>
+        <title>{EventData?.Name} | Exhibitor Portal</title>
         <meta name="description" content="" />
 
       </Head>
 
-      <BannerComponent />
+      {
+        EventData ? (
+          <BannerComponent EventData={EventData} />
+        ) : ""
+      }
 
       <div className="products-service-wrapper ">
         <div className="container">
@@ -40,16 +71,16 @@ export default function Home() {
           </div>
 
           <div className="row service-wrapper">
-            {Categories.map((item: any, index: number) => {
+            {categories.map((item: StandSpaceCategoryModel, index: number) => {
               return (
                 <div className="col-lg-4 mb-3" key={`service${index}`}>
-                  <Link href="/shop">
+                  <Link href={`/shop/${item.StandSpaceCategoryID}`}>
                     <div className="service-card">
 
-                      <img src={item.image} alt="" className="product-img" />
+                      <img style={{height:"270px"}} src={item.Image?item.Image:`/assets/imgs/default.png`} alt={item.Name} className="product-img" />
 
                       <div className="footer">
-                        <p>{item.name}</p>
+                        <p>{item.Name}</p>
                       </div>
                     </div>
                   </Link>

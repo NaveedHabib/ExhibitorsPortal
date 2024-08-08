@@ -1,17 +1,57 @@
 import SideBarComponent from '@/components/SideBarComponent'
+import Helper from '@/modules/Helper';
+import { loggedModel } from '@/sysmodel/loginModel';
 import Link from 'next/link'
-import React from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from 'react'
+import { FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import accountModel from '@/sysmodel/accountModel';
+import eventModel from '@/sysmodel/eventModel';
+import Globals from '@/modules/Globals';
 
 export default function MyAccount() {
+
+    const loggedData: loggedModel | null = Helper.getLoggedData();
+
+    const [EventData, SetEventData] = useState<eventModel>();
+    const [AccountData, SetAccountData] = useState<Array<accountModel>>([]);
+
+    useEffect(() => {
+        if (loggedData) {
+
+            axios.get(`${Globals.API_URL}Account/GetAllContractors/${loggedData.itemGuid}`).then((r: any) => {
+                const dataModel: Array<accountModel> = r.data;
+                SetAccountData(dataModel);
+            });
+
+            axios.get(`${Globals.API_URL}Exhibitor/GetEvent/${loggedData.eventid}`).then((r: any) => {
+                const dataModel: eventModel = r.data;
+                SetEventData(dataModel);
+            });
+        }
+    }, []);
+
+    function deleteContractor(id: number) {
+        axios.get(`${Globals.API_URL}Account/DeleteAccount/${id}`).then((r: any) => {
+            window.location.reload();
+        });
+    }
+
+    function ApproveStatus(id: number) {
+        axios.get(`${Globals.API_URL}Account/Approve/${id}`).then((r: any) => {
+            window.location.reload();
+        });
+    }
+
     return (
         <div className='my-account-wrapper margin-top-section'>
             <div className="container">
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link href="/" className='text-dark'>
+                            <a href="/" className='text-dark'>
                                 Home
-                            </Link>
+                            </a>
                         </li>
 
                         <li className="breadcrumb-item active" aria-current="page">Contractor</li>
@@ -21,45 +61,87 @@ export default function MyAccount() {
                 <div className="section-container">
                     <SideBarComponent />
                     <div className="contents-section">
-
-                        <form className='my-form'>
                             <div className="row ">
                                 <div className="col-12">
-                                    <p className=''>Contractor Information</p>
+                                    <p className=''>Contractors
+
+                                    <a href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='text-primary'>Contractor Registration Link</a>
+                                    
+                                    </p>
                                 </div>
                             </div>
-                            <div className="row mb-3">
-                                <div className="col-lg-6">
-                                    <label htmlFor="firstname" className='mb-1'>First Name</label>
-                                    <input type="text" className='form-control' placeholder='First Name' />
-
-                                </div>
-                                <div className="col-lg-6">
-                                    <label htmlFor="firstname" className='mb-1'>Last Name</label>
-                                    <input type="text" className='form-control' placeholder='Last Name' />
-
-                                </div>
-                            </div>
-
-                            <div className="row mb-3">
-                                <div className="col-lg-6">
-                                    <label htmlFor="firstname" className='mb-1'>Email Address</label>
-                                    <input type="email" className='form-control' placeholder='Email address' />
-
-                                </div>
-                                <div className="col-lg-6">
-                                    <label htmlFor="firstname" className='mb-1'>Password</label>
-                                    <input type="password" className='form-control' placeholder='Password' />
-
-                                </div>
-                            </div>
-
+                           
                             <div className="row">
-                                <div className="col-lg-6">
-                                    <button className='update-btn'>Submit & Create Contractor</button>
+                            <div className="col-12">
+                                <div className="table-responsive">
+                                    <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Approve</th>
+                                                <th>Orders</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                AccountData.map((m: any) => {
+                                                    var item: accountModel = m;
+                                                    if (item.Email != loggedData?.email) {
+                                                        return (
+                                                            <tr>
+                                                                <td>{item.Name}</td>
+                                                                <td>{item.Email}</td>
+                                                                <td>{item.Approved ? (
+                                                                    <a href="javascript:0"
+                                                                        onClick={(e) => {
+                                                                            let text = "Are you sure you want to change the Approve status?";
+                                                                            if (confirm(text) == true) {
+                                                                                ApproveStatus(item.AccountID);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <FaToggleOn size={20} color="green" />
+                                                                    </a>
+                                                                ) : (
+                                                                    <a href="javascript:0"
+                                                                        onClick={(e) => {
+                                                                            let text = "Are you sure you want to change the Approve status?";
+                                                                            if (confirm(text) == true) {
+                                                                                ApproveStatus(item.AccountID);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <FaToggleOff size={20} color="red" />
+                                                                    </a>
+                                                                )}</td>
+
+                                                               <td><a href={`${Globals.BASE_URL}/contractor/orders/${item.AccountID}`}>Click here</a></td>
+                                                               
+                                                                <td>
+                                                                    <a className="text-danger" href="javascript:0"
+                                                                        onClick={(e) => {
+                                                                            let text = "Are you sure you want to delete?";
+                                                                            if (confirm(text) == true) {
+                                                                                deleteContractor(item.AccountID);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        Delete
+                                                                    </a></td>
+                                                            </tr>
+                                                        )
+                                                    }
+
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+
                     </div>
                 </div>
 
