@@ -25,7 +25,7 @@ export default function Shop() {
     const [categories, setCategories] = useState<Array<StandSpaceCategoryModel>>([]);
 
     const handleAddToCart = (product: StandSpaceItemModel) => {
-        if (!cartItems.find(item => item.id === product.StandSpaceItemID)) {
+        if (!cartItems.find(item => item.StandSpaceItemID === product.StandSpaceItemID)) {
             dispatch(addToCart(product));
         }
     }

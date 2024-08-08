@@ -14,11 +14,11 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<StandSpaceItemModel>) => {
-      const itemIndex = state.items.findIndex(item => item.id === action.payload.StandSpaceItemID);
+      const itemIndex = state.items.findIndex(item => item.StandSpaceItemID === action.payload.StandSpaceItemID);
       if (itemIndex >= 0) {
-        state.items[itemIndex].quantity += 1;
+        state.items[itemIndex].Quantity += 1;
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({ ...action.payload, Quantity: 1 });
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {

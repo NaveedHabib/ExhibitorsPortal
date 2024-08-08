@@ -42,7 +42,7 @@ export default function product() {
     const cartItems = useSelector((state: RootState) => state.cart.items);
 
     const handleAddToCart = (product: StandSpaceItemModel) => {
-        if (!cartItems.find(item => item.id === product.StandSpaceItemID)) {
+        if (!cartItems.find(item => item.StandSpaceItemID === product.StandSpaceItemID)) {
             dispatch(addToCart(product));
         }
     }
