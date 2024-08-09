@@ -65,8 +65,7 @@ export default function MyAccount() {
                                 <div className="col-12">
                                     <p className=''>Contractors
 
-                                    <a href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='text-primary'>Contractor Registration Link</a>
-                                    
+                                    <a href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='btn btn-primary'>Contractor Registration Link</a>
                                     </p>
                                 </div>
                             </div>

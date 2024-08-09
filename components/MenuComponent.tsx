@@ -167,7 +167,7 @@ export default function MenuComponent() {
 
                                         <li className={getNavItemClass("/contractor")}>
                                             <Link href="/contractor" >
-                                                contractor
+                                                Contractor
                                             </Link>
                                         </li>
                                     </React.Fragment>

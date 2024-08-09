@@ -1,6 +1,6 @@
 // components/CompanyInformationForm.tsx
 import Globals from '@/modules/Globals';
-import React from 'react';
+import React, { useRef } from 'react';
 import axios from "axios";
 import { TfiControlBackward } from 'react-icons/tfi';
 
@@ -49,9 +49,21 @@ const CompanyInformationForm: React.FC<Props> = ({ formData, setFormData, previo
         }
     }
 
+    const formRef = useRef<HTMLFormElement>(null);
+
+    const handleSubmit = () => {
+        if (formRef.current && formRef.current.checkValidity()) {
+            // Form is valid, proceed with form submission
+            submitForm()
+        } else {
+            // Form is invalid, trigger browser's built-in validation UI
+            formRef.current?.reportValidity();
+        }
+    };
+
     return (
         <div className='mt-5'>
-            <form className=''>
+            <form className='' ref={formRef}>
                 <h5 className='mb-3'>Company Information:</h5>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
@@ -126,7 +138,8 @@ const CompanyInformationForm: React.FC<Props> = ({ formData, setFormData, previo
                             <TfiControlBackward />
                             <span>Previous</span></button>
                         <button type="button" className='btn btn-primary text-white'
-                         onClick={submitForm}
+                        //  onClick={submitForm}
+                         onClick={handleSubmit}
                         >Submit</button>
                     </div>
                 </div>
