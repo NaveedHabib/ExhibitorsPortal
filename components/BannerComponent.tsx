@@ -18,21 +18,21 @@ export default function BannerComponent(props: any) {
     var minutesData: any = document.getElementById("minutes");
 
     function getDateDifferenceloop(date: Date | null) {
-        if (date) {
-            discount?.classList.remove("d-none");
+        const intervalId = setInterval(() => {
+            if (date) {
+                discount?.classList.remove("d-none");
 
-            const intervalId = setInterval(() => {
                 const difference = getDateDifference(date);
                 if (difference === null) {
                     clearInterval(intervalId);
                     discount?.classList.add("d-none");
                 }
+            }
+            else {
+                discount?.classList.add("d-none");
+            }
+        }, 1000);
 
-            }, 1000);
-        }
-        else {
-            discount?.classList.add("d-none");
-        }
     }
 
     function getDateDifference(DiscountDate: Date) {
