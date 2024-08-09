@@ -6,38 +6,26 @@ import eventModel from '@/sysmodel/eventModel';
 
 export default function BannerComponent(props: any) {
 
-    const eventData: eventModel = props.EventData;
-
-    if (eventData.EarlyBirdDiscount) {
-        getDateDifferenceloop(eventData.EarlyBirdDiscount)
-    }
+    var eventData: eventModel = props.EventData;
 
     var discount = document.getElementById("discount-counter");
     var daysData: any = document.getElementById("days");
     var hoursData: any = document.getElementById("hours");
     var minutesData: any = document.getElementById("minutes");
 
-    function getDateDifferenceloop(date: Date | null) {
-        const intervalId = setInterval(() => {
-            if (date) {
-                discount?.classList.remove("d-none");
-
-                const difference = getDateDifference(date);
-                if (difference === null) {
-                    clearInterval(intervalId);
-                    discount?.classList.add("d-none");
-                }
-            }
-            else {
-                discount?.classList.add("d-none");
-            }
-        }, 1000);
-
-    }
+    setInterval(() => {
+        var date = eventData.EarlyBirdDiscount;
+        if (date && daysData) {
+            discount?.classList.remove("d-none");
+            getDateDifference(date);
+        }
+        else {
+            discount?.classList.add("d-none");
+        }
+    }, 1000);
 
     function getDateDifference(DiscountDate: Date) {
         try {
-
             if (!(DiscountDate instanceof Date)) {
                 DiscountDate = new Date(DiscountDate);
             }
@@ -46,10 +34,8 @@ export default function BannerComponent(props: any) {
             var futureDate = DiscountDate.getTime();
             var delta = Math.abs(futureDate - today.getTime()) / 1000;
 
-
             if (futureDate <= today.getTime()) {
                 discount?.classList.add("d-none");
-                return null;
             }
 
             // calculate (and subtract) whole days
@@ -75,16 +61,11 @@ export default function BannerComponent(props: any) {
             //   $(".seconds").html(seconds.toString());
 
             discount?.classList.remove("d-none");
-
-            return "loop";
-
         }
         catch (e) {
             console.log(e);
             discount?.classList.add("d-none");
-            return null;
         }
-
     }
 
     return (
