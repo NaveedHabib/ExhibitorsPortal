@@ -48,6 +48,7 @@ export default function Login() {
                         eventid: login.eventid,
                         exhibitorId: login.exhibitorId,
                         email: login.email,
+                        standUpload: login.standUpload,
                         type: login.type,
                         itemGuid: login.itemGuid
                     };

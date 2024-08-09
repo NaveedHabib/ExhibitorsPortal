@@ -12,6 +12,7 @@ export default class eventModel {
     public Currency!: string;
     public EventDate!: string;
     public Venue!: string;
+    public OfferNote!: string;
     public VAT!: number;
     public EarlyBirdDiscount!: Date|null;
 }

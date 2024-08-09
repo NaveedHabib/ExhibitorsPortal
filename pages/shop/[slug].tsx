@@ -109,6 +109,9 @@ export default function Shop() {
                                         </a>
                                         {/* <span className='earlybird-badge'>EARLY BIRD</span> */}
 
+                                        <p className='m-0' style={{fontSize:"14px"}}><span style={{fontWeight:900}}>Quantity:</span> {item.Quantity}</p>
+                                        <p className='m-0' style={{fontSize:"14px"}}><span style={{fontWeight:900}}>Unit:</span> {item.Unit}</p>
+
                                         <div className=' mt-3 price-section'>
                                             <div className="amount">{item.Amount} {EventData?.Currency}</div>
                                             {isInCart ? (<FaCheck color='green' />

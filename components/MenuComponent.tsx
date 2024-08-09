@@ -180,6 +180,16 @@ export default function MenuComponent() {
                                 )
                             }
 
+                            {
+                                loggedData?.standUpload?(
+                                    <li className={getNavItemClass("/contractor")}>
+                                    <Link href={`/contractor/documents`} >
+                                        Upload Document
+                                    </Link>
+                                </li>
+                                ):""
+                            }
+
 
                             <li className={getNavItemClass("/cart")}>
                                 <Link href="/cart" className='d-flex gap-2 align-items-center'>

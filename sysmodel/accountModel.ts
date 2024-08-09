@@ -7,6 +7,7 @@ export default class accountModel {
     public ExhibitorId!: string;
     public UserType!: string;
     public Approved!: boolean;
+    public StandUpload!: boolean;
     public Publish!: boolean;
     public Rejected!: boolean;
 }

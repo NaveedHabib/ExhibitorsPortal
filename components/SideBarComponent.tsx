@@ -31,10 +31,10 @@ export default function SideBarComponent() {
                             </li>
                         </Link>
 
-                        <Link href="/contractor/information">
-                            <li className={getNavItemClass("/contractor/information")}>
+                        <Link href="/contractor/documents">
+                            <li className={getNavItemClass("/contractor/documents")}>
                                 <FaShippingFast />
-                                <span>Information</span>
+                                <span>Documents</span>
                             </li>
                         </Link>
                     </div>

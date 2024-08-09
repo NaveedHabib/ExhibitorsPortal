@@ -43,6 +43,12 @@ export default function MyAccount() {
         });
     }
 
+    function StandUploadStatus(id: number) {
+        axios.get(`${Globals.API_URL}Account/StandUpload/${id}`).then((r: any) => {
+            window.location.reload();
+        });
+    }
+
     return (
         <div className='my-account-wrapper margin-top-section'>
             <div className="container">
@@ -63,10 +69,12 @@ export default function MyAccount() {
                     <div className="contents-section">
                             <div className="row ">
                                 <div className="col-12">
-                                    <p className=''>Contractors
+                                    <p className='mb-2'>Contractors
 
-                                    <Link href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='btn btn-primary'>Contractor Registration Link</Link>
+                                    {/* <Link href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='btn btn-primary'>Contractor Registration Link</Link> */}
                                     </p>
+
+                                    <Link href={`/contractor/signup/${loggedData?.itemGuid}`} target={"_blank"} className="text-primary mb-2 d-block">Copy the registration link and send it to the contractor</Link>
                                 </div>
                             </div>
                            
@@ -78,6 +86,7 @@ export default function MyAccount() {
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Stand Upload</th>
                                                 <th>Approve</th>
                                                 <th>Orders</th>
                                                 <th>Actions</th>
@@ -92,6 +101,30 @@ export default function MyAccount() {
                                                             <tr key={index}>
                                                                 <td>{item.Name}</td>
                                                                 <td>{item.Email}</td>
+                                                                <td>{item.StandUpload ? (
+                                                                    <Link href="javascript:0"
+                                                                        onClick={(e:any) => {
+                                                                            let text = "Are you sure you want to change the status?";
+                                                                            if (confirm(text) == true) {
+                                                                                StandUploadStatus(item.AccountID);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <FaToggleOn size={20} color="green" />
+                                                                    </Link>
+                                                                ) : (
+                                                                    <Link href="javascript:0"
+                                                                        onClick={(e:any) => {
+                                                                            let text = "Are you sure you want to change the status?";
+                                                                            if (confirm(text) == true) {
+                                                                                StandUploadStatus(item.AccountID);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <FaToggleOff size={20} color="red" />
+                                                                    </Link>
+                                                                )}</td>
+
                                                                 <td>{item.Approved ? (
                                                                     <Link href="javascript:0"
                                                                         onClick={(e:any) => {

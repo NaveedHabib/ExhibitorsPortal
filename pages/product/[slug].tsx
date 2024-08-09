@@ -54,13 +54,14 @@ export default function Product() {
                         </div>
                         <div className="col-lg-6 col-12">
                             <h2 className='title'>{product?.Name}</h2>
-                            <p className='unit'>{product?.Quantity} {product?.Unit}</p>
-                            
+                            <p className='m-0' style={{ fontSize: "14px" }}><span style={{ fontWeight: 900 }}>Quantity:</span> {product.Quantity}</p>
+                            <p className='m-0' style={{ fontSize: "14px" }}><span style={{ fontWeight: 900 }}>Unit:</span> {product.Unit}</p>
+
                             {
-                                product.Description?(
+                                product.Description ? (
                                     <p className='text-secondary'
-                                    dangerouslySetInnerHTML={{ __html: product.Description.replace(/\n/g, '<br />') }} />
-                                ):""
+                                        dangerouslySetInnerHTML={{ __html: product.Description.replace(/\n/g, '<br />') }} />
+                                ) : ""
                             }
 
                             <div className="d-flex gap-lg-5 mt-4 align-items-lg-center flex-column flex-lg-row">

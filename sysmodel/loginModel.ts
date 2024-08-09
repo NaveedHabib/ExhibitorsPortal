@@ -7,6 +7,7 @@ export default class loginModel {
     public exhibitorId!: string;
     public eventid!: string;
     public success!: boolean;
+    public standUpload!: boolean;
     public approve!: boolean;
     public notPaid!: boolean;
     public reject!: boolean;
@@ -17,6 +18,7 @@ export default class loginModel {
     public type!: string;
     public itemGuid!: string;
     public exhibitorId!: string;
+    public standUpload!: boolean;
     public name!: string;
     public email!: string;
     public eventid!: string;

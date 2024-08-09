@@ -76,6 +76,12 @@ export default function BannerComponent(props: any) {
 
                         <img src={eventData.Logo} alt={eventData.Name} className='banner-logo' />
                         <p className='date'>{eventData.EventDate} <br />{eventData.Venue}</p>
+                        {
+                            eventData.OfferNote?(
+                                <p>{eventData.OfferNote}</p>
+
+                            ):""
+                        }
                     </div>
                 </div>
 

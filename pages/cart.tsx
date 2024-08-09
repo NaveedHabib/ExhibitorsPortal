@@ -118,48 +118,48 @@ const Cart = () => {
     }, []);
 
 
-function checkout(){
-    var selected: Array<AddStandSpace> = [];
+    function checkout() {
+        var selected: Array<AddStandSpace> = [];
 
-    cartItems.map((c:any)=>{
-        var item: StandSpaceItemModel = c;
+        cartItems.map((c: any) => {
+            var item: StandSpaceItemModel = c;
 
-        var ss: AddStandSpace = new AddStandSpace();
-        ss.Quantity = item.Quantity;
-        ss.StandSpaceItemID = item.StandSpaceItemID;
+            var ss: AddStandSpace = new AddStandSpace();
+            ss.Quantity = item.Quantity;
+            ss.StandSpaceItemID = item.StandSpaceItemID;
 
-        selected.push(ss);
-    })
-
-    var grand_totalData: any = document.getElementById("totalAmountInt");
-    var totalVATAmountIntData: any = document.getElementById("totalVATAmountInt");
-    var promocodeData: any = document.getElementById("promocode");
-    var promocode_errorData: any = document.getElementById("promocode-error");
-
-    var total = grand_totalData.value;
-    var promocode = promocodeData.value;
-    var totalVATAmountInt = totalVATAmountIntData.value;
-
-    if (promocode_errorData.classList.contains("d-none")) {
-        axios.post(`${Globals.API_URL}Exhibitor/createOrder/${loggedData?.id}`, {
-            total: total,
-            totalVATAmount: totalVATAmountInt,
-            order: selected,
-            promocode: promocode
+            selected.push(ss);
         })
-            .then((data:any) => {
-                if (data) {
-                    cartItems.map((c:any)=>{
-                        var item: StandSpaceItemModel = c;
-                        dispatch(removeFromCart(item.StandSpaceItemID));
-                    })
-                    
-                    window.location.href = `${Globals.Server_URL}Payment/Go/${data.data}`;
-                }
-            })
-    }
 
-}
+        var grand_totalData: any = document.getElementById("totalAmountInt");
+        var totalVATAmountIntData: any = document.getElementById("totalVATAmountInt");
+        var promocodeData: any = document.getElementById("promocode");
+        var promocode_errorData: any = document.getElementById("promocode-error");
+
+        var total = grand_totalData.value;
+        var promocode = promocodeData.value;
+        var totalVATAmountInt = totalVATAmountIntData.value;
+
+        if (promocode_errorData.classList.contains("d-none")) {
+            axios.post(`${Globals.API_URL}Exhibitor/createOrder/${loggedData?.id}`, {
+                total: total,
+                totalVATAmount: totalVATAmountInt,
+                order: selected,
+                promocode: promocode
+            })
+                .then((data: any) => {
+                    if (data) {
+                        cartItems.map((c: any) => {
+                            var item: StandSpaceItemModel = c;
+                            dispatch(removeFromCart(item.StandSpaceItemID));
+                        })
+
+                        window.location.href = `${Globals.Server_URL}Payment/Go/${data.data}`;
+                    }
+                })
+        }
+
+    }
 
     return (
         <div className="cart-wrapper margin-top-section">
@@ -178,8 +178,12 @@ function checkout(){
                                         <div className="cart-item">
                                             <div className='d-flex flex-column flex-lg-row gap-4 align-items-lg-center'>
                                                 <a href={`/product/${item.StandSpaceItemID}`}>
-                                                    <img src={item.Image ? item.Image : `/assets/imgs/default.png`} alt={item.Name} />
+                                                    <img src={item.Image ? item.Image : `/assets/imgs/default.png`} style={{ float: "left", marginRight: "15px" }} alt={item.Name} />
                                                     <span className='name'>{item.Name}</span>
+
+                                                    <p className='m-0' style={{ fontSize: "14px" }}><span style={{ fontWeight: 900 }}>Quantity:</span> {item.Quantity}</p>
+                                                    <p className='m-0' style={{ fontSize: "14px" }}><span style={{ fontWeight: 900 }}>Unit:</span> {item.Unit}</p>
+
                                                 </a>
                                             </div>
 
