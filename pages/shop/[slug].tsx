@@ -64,7 +64,7 @@ export default function Shop() {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item" aria-current="page">
-                                    <a href='/' className='text-dark'>Home</a>
+                                    <Link href='/' className='text-dark'>Home</Link>
                                 </li>
 
                                 <li className="breadcrumb-item active" aria-current="page">Shop</li>
@@ -80,10 +80,10 @@ export default function Shop() {
                         }}>
                             <option value={"all"} selected={categoryId == "all" ? true : false}>All Categories</option>
                             {
-                                categories.map((c: any) => {
+                                categories.map((c: any, index: number) => {
                                     var item: StandSpaceCategoryModel = c;
                                     return (
-                                        <option value={item.StandSpaceCategoryID} selected={categoryId == item.StandSpaceCategoryID.toString() ? true : false}>{item.Name}</option>
+                                        <option key={index} value={item.StandSpaceCategoryID} selected={categoryId == item.StandSpaceCategoryID.toString() ? true : false}>{item.Name}</option>
                                     )
                                 })
                             }

@@ -143,9 +143,9 @@ export default function MenuComponent() {
 
 
                             <li className={getNavItemClass("/")}>
-                                <a href='/' className='text-dark'>
+                                <Link href='/' className='text-dark'>
                                     Home
-                                </a>
+                                </Link>
                             </li>
 
 

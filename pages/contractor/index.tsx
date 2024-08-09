@@ -49,9 +49,9 @@ export default function MyAccount() {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item" aria-current="page">
-                            <a href="/" className='text-dark'>
+                            <Link href="/" className='text-dark'>
                                 Home
-                            </a>
+                            </Link>
                         </li>
 
                         <li className="breadcrumb-item active" aria-current="page">Contractor</li>
@@ -65,7 +65,7 @@ export default function MyAccount() {
                                 <div className="col-12">
                                     <p className=''>Contractors
 
-                                    <a href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='btn btn-primary'>Contractor Registration Link</a>
+                                    <Link href={`/contractor/signup/${loggedData?.itemGuid}`} style={{ fontSize: "14px", float: "right" }} target={"_blank"} className='btn btn-primary'>Contractor Registration Link</Link>
                                     </p>
                                 </div>
                             </div>
@@ -85,16 +85,16 @@ export default function MyAccount() {
                                         </thead>
                                         <tbody>
                                             {
-                                                AccountData.map((m: any) => {
+                                                AccountData.map((m: any, index: number) => {
                                                     var item: accountModel = m;
                                                     if (item.Email != loggedData?.email) {
                                                         return (
-                                                            <tr>
+                                                            <tr key={index}>
                                                                 <td>{item.Name}</td>
                                                                 <td>{item.Email}</td>
                                                                 <td>{item.Approved ? (
-                                                                    <a href="javascript:0"
-                                                                        onClick={(e) => {
+                                                                    <Link href="javascript:0"
+                                                                        onClick={(e:any) => {
                                                                             let text = "Are you sure you want to change the Approve status?";
                                                                             if (confirm(text) == true) {
                                                                                 ApproveStatus(item.AccountID);
@@ -102,10 +102,10 @@ export default function MyAccount() {
                                                                         }}
                                                                     >
                                                                         <FaToggleOn size={20} color="green" />
-                                                                    </a>
+                                                                    </Link>
                                                                 ) : (
-                                                                    <a href="javascript:0"
-                                                                        onClick={(e) => {
+                                                                    <Link href="javascript:0"
+                                                                        onClick={(e:any) => {
                                                                             let text = "Are you sure you want to change the Approve status?";
                                                                             if (confirm(text) == true) {
                                                                                 ApproveStatus(item.AccountID);
@@ -113,14 +113,14 @@ export default function MyAccount() {
                                                                         }}
                                                                     >
                                                                         <FaToggleOff size={20} color="red" />
-                                                                    </a>
+                                                                    </Link>
                                                                 )}</td>
 
-                                                               <td><a href={`${Globals.BASE_URL}/contractor/orders/${item.AccountID}`}>Click here</a></td>
+                                                               <td><Link href={`${Globals.BASE_URL}/contractor/orders/${item.AccountID}`}>Click here</Link></td>
                                                                
                                                                 <td>
-                                                                    <a className="text-danger" href="javascript:0"
-                                                                        onClick={(e) => {
+                                                                    <Link className="text-danger" href="javascript:0"
+                                                                        onClick={(e:any) => {
                                                                             let text = "Are you sure you want to delete?";
                                                                             if (confirm(text) == true) {
                                                                                 deleteContractor(item.AccountID);
@@ -128,7 +128,7 @@ export default function MyAccount() {
                                                                         }}
                                                                     >
                                                                         Delete
-                                                                    </a></td>
+                                                                    </Link></td>
                                                             </tr>
                                                         )
                                                     }

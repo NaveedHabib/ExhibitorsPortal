@@ -62,10 +62,10 @@ export default function CompanyProfile() {
                                     </thead>
                                     <tbody>
                                         {
-                                            orders.map((m: any) => {
+                                            orders.map((m: any, index: number) => {
                                                 var item: orderItemModel = m;
                                                 return (
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td>{item.Name}</td>
                                                         <td>{item.Unit}</td>
                                                         <td>{item.Amount} {EventData?.Currency}</td>
@@ -116,11 +116,11 @@ export default function CompanyProfile() {
                             <div className="col-12 text-end">
                                 {
                                     order?.Paid ? "" : (
-                                        <a href="javascript:0"
+                                        <Link href="javascript:0"
                                             className="btn btn-primary"
-                                            onClick={(e) => {
+                                            onClick={(e:any) => {
                                                 window.location.href = `${Globals.Server_URL}Payment/Go/${order?.OrderID}`
-                                            }}>Click here to Pay</a>
+                                            }}>Click here to Pay</Link>
                                     )
                                 }
                             </div>

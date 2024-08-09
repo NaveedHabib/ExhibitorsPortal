@@ -112,7 +112,7 @@ export default function MyAccount() {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item" aria-current="page">
-                            <a href='/' className='text-dark'>Home</a>
+                            <Link href='/' className='text-dark'>Home</Link>
                         </li>
                         <li className="breadcrumb-item " aria-current="page">
                             <Link href="/contractor" className='text-dark'>

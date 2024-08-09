@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from '@/node_modules/react-redux/dist/react-
 import { addToCart } from '@/store/slices/cartSlice';
 import { RootState } from '@/store/index';
 
-export default function product() {
+export default function Product() {
     const dispatch = useDispatch();
 
     const productId = window.location.pathname.replace("/product/", "");
@@ -27,12 +27,8 @@ export default function product() {
                 const dataModel: StandSpaceItemModel = r.data;
                 setProduct(dataModel);
             });
-        }
-    }, []);
 
-    useEffect(() => {
-        if (loggedData) {
-            axios.get(`${Globals.API_URL}Exhibitor/GetEvent/${loggedData.eventid}`).then((r: any) => {
+            axios.get(`${Globals.API_URL}Exhibitor/GetEvent/${loggedData?.eventid}`).then((r: any) => {
                 const dataModel: eventModel = r.data;
                 SetEventData(dataModel);
             });

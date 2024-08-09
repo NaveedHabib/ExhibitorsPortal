@@ -43,9 +43,9 @@ export default function CompanyProfile() {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item" aria-current="page">
-                            <a href='/' className='text-dark'>
+                            <Link href='/' className='text-dark'>
                                 Home
-                            </a>
+                            </Link>
                         </li>
                         <li className="breadcrumb-item " aria-current="page">
                             <Link href="/my-account" className='text-dark'>
@@ -73,23 +73,23 @@ export default function CompanyProfile() {
                                 </thead>
                                 <tbody>
                                     {
-                                        orders.map((m: any) => {
+                                        orders.map((m: any, index: number) => {
                                             var item: orderModel = m;
                                             return (
-                                                <tr>
+                                                <tr key={index}>
                                                     <td>{item.OrderID}</td>
                                                     <td>{item.Type == "profile" ? item.TotalAmount : item.TotalAmountWithTax} {EventData?.Currency}</td>
                                                     <td>{item.Paid ? "Paid" : "Not Paid"}</td>
                                                     <td>
-                                                        <a href={`/order/${item.OrderID}`} target="_blank">
+                                                        <Link href={`/order/${item.OrderID}`} target="_blank">
                                                             View
-                                                        </a>
+                                                        </Link>
 
                                                         {
                                                             item.Paid == false ? (
                                                                 <React.Fragment>
                                                                     <span> | </span>
-                                                                    <a className="text-danger" href="javascript:0"
+                                                                    <Link className="text-danger" href="javascript:0"
                                                                         onClick={(e) => {
                                                                             let text = "Are you sure you want to delete?";
                                                                             if (confirm(text) == true) {
@@ -98,7 +98,7 @@ export default function CompanyProfile() {
                                                                         }}
                                                                     >
                                                                         Delete
-                                                                    </a>
+                                                                    </Link>
                                                                 </React.Fragment>
                                                             ) : ""
                                                         }

@@ -53,9 +53,9 @@ export default function CompanyProfile() {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item" aria-current="page">
-                            <a href='/' className='text-dark'>
+                            <Link href='/' className='text-dark'>
                                 Home
-                            </a>
+                            </Link>
                         </li>
                         {
                             loggedData?.type == "exhibitor" ? (
@@ -91,10 +91,10 @@ export default function CompanyProfile() {
                                     </thead>
                                     <tbody>
                                         {
-                                            orders.map((m: any) => {
+                                            orders.map((m: any, index: number) => {
                                                 var item: orderModel = m;
                                                 return (
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td>{item.OrderID}</td>
                                                         <td>{item.Type == "profile" ? item.TotalAmount : item.TotalAmountWithTax} {EventData?.Currency}</td>
                                                         <td>{item.Paid ? "Paid" : "Not Paid"}</td>

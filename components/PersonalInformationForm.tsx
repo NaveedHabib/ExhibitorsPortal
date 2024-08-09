@@ -93,10 +93,10 @@ const PersonalInformationForm: React.FC<Props> = ({ formData, setFormData, nextS
                             onBlur={formik.handleBlur}>
                             <option value="">Select Stand Space</option>
                             {
-                                StandSpaceData.map((s: any) => {
+                                StandSpaceData.map((s: any, index: number) => {
                                     var item: StandSpaceModel = s;
                                     return (
-                                        <option value={item.StandSpaceID}>{item.Name}</option>
+                                        <option key={index} value={item.StandSpaceID}>{item.Name}</option>
                                     )
                                 })
                             }
